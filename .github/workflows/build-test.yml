@@ -1,0 +1,23 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  Build-Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install les dépendances
+        run: npm ci
+
+      - name: Build l'application
+        run: npm run build
+
+      - name: Run les tests Cypress
+        run: npm run e2e:headless
