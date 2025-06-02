@@ -2,8 +2,10 @@ name: Test & Build
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  Build-Test:
+  Build:
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-deps.outputs.cache-primary-key }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -13,11 +15,39 @@ jobs:
         with:
           node-version: "24"
 
+      - name: Cache node_modules
+        id: cache-deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
       - name: Install les dépendances
         run: npm ci
 
       - name: Build l'application
         run: npm run build
+
+  Test:
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Restore node_modules cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: Install les dépendances (si besoin)
+        run: npm ci
 
       - name: Run les tests Cypress
         run: npm run e2e:headless
