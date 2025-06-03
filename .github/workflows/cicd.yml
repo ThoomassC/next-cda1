@@ -47,3 +47,24 @@ jobs:
           name: cypress-screenshots-${{ matrix.browser }}
           path: cypress/screenshots
           retention-days: 5
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Préparer la clé SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Déployer sur le serveur distant
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            cd /chemin/vers/ton/app &&
+            git pull origin main &&
+            npm install &&
+            npm run build &&
+            pm2 reload all
+          "
