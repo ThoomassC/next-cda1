@@ -1,7 +1,7 @@
 
 FROM node:24-alpine AS next-app
 
-LABEL org.opencontainers.image.source https://github.com/thoomassc/next-cda1
+LABEL org.opencontainers.image.source="https://github.com/thoomassc/next-cda1"
 
 WORKDIR /app
 
