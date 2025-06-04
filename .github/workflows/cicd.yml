@@ -128,7 +128,7 @@ jobs:
   #         "
 
   deploy-prod:
-    #needs: build-docker
+    needs: build-docker
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -148,7 +148,7 @@ jobs:
           "
 
   deploy-test:
-    #needs: build-docker
+    needs: build-docker
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
     steps:
