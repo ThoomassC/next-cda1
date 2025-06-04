@@ -1,0 +1,6 @@
+services:
+  next-app:
+    image: ghcr.io/thoomassc/next-cda1/next-app:latest
+    restart: always
+    ports:
+      - "80:3000"

@@ -96,3 +96,25 @@ jobs:
           push: true
           tags: ghcr.io/thoomassc/next-cda1/next-app:latest
           platforms: linux/amd64
+
+  deploy-docker:
+    needs: build-docker
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Préparer la clé SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Déployer l'image Docker sur le serveur distant
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            echo '${{ secrets.GHCR_PAT }}' | docker login ghcr.io -u ${{ secrets.SSH_USER }} --password-stdin
+            docker pull ghcr.io/thoomassc/next-cda1/next-app:latest
+            docker stop next-app || true
+            docker rm next-app || true
+            docker run -d --name next-app -p 80:3000 ghcr.io/thoomassc/next-cda1/next-app:latest
+          "
