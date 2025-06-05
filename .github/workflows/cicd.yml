@@ -138,8 +138,8 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
             echo '${{ secrets.GHCR_PAT }}' | docker login ghcr.io -u ${{ secrets.SSH_USER }} --password-stdin
             cd production
-            sudo docker compose -f docker-compose.global.yml -f docker-compose.prod.yml pull
-            sudo docker compose -f docker-compose.global.yml -f docker-compose.prod.yml up -d
+            sudo docker compose -f docker-compose.prod.yml pull
+            sudo docker compose -f docker-compose.prod.yml up -d
           "
 
   deploy-test:
@@ -162,6 +162,6 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
             echo '${{ secrets.GHCR_PAT }}' | docker login ghcr.io -u ${{ secrets.SSH_USER }} --password-stdin
             cd test
-            sudo docker compose -f docker-compose.global.yml -f docker-compose.test.yml pull
-            sudo docker compose -f docker-compose.global.yml -f docker-compose.test.yml up -d
+            sudo docker compose -f docker-compose.test.yml pull
+            sudo docker compose -f docker-compose.test.yml up -d
           "
