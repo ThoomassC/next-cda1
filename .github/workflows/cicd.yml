@@ -133,6 +133,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Copier le fichier docker-compose.prod.yml sur le serveur
+        run: |
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./production/docker-compose.prod.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:production/docker-compose.prod.yml
+
       - name: Déployer l'image Docker sur le serveur distant (prod)
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
@@ -156,6 +160,10 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Copier le fichier docker-compose.test.yml sur le serveur
+        run: |
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./test/docker-compose.test.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:test/docker-compose.test.yml
 
       - name: Déployer l'image Docker sur le serveur distant (test)
         run: |
