@@ -1,6 +1,6 @@
 services:
   next-app:
-    image: ghcr.io/thoomassc/next-cda1/next-app:test
+    image: ghcr.io/thoomassc/next-cda1/next-app:develop
     restart: always
     ports:
       - "8080:3000"
