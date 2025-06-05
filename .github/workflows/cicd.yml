@@ -122,6 +122,7 @@ jobs:
     needs: build-docker
     environment:
       name: prod
+      url: http://23.22.39.35/
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -145,6 +146,7 @@ jobs:
     needs: build-docker
     environment:
       name: test
+      url: http://23.22.39.35:8080/
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
     steps:
