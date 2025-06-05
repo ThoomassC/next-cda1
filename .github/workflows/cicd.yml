@@ -154,6 +154,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
     steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
       - name: Préparer la clé SSH
         run: |
           mkdir -p ~/.ssh
@@ -163,7 +166,7 @@ jobs:
 
       - name: Copier le fichier docker-compose.test.yml sur le serveur
         run: |
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.test.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:test/docker-compose.test.yml
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa docker-compose.test.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:test/docker-compose.test.yml
 
       - name: Déployer l'image Docker sur le serveur distant (test)
         run: |
