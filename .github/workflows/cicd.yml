@@ -134,6 +134,7 @@ jobs:
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
             echo '${{ secrets.GHCR_PAT }}' | docker login ghcr.io -u ${{ secrets.SSH_USER }} --password-stdin
+            cd production
             docker pull ghcr.io/thoomassc/next-cda1/next-app:main
             docker compose -f docker-compose.prod.yml up -d
           "
@@ -154,6 +155,7 @@ jobs:
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
             echo '${{ secrets.GHCR_PAT }}' | docker login ghcr.io -u ${{ secrets.SSH_USER }} --password-stdin
+            cd test
             docker pull ghcr.io/thoomassc/next-cda1/next-app:test
             docker compose -f docker-compose.test.yml up -d --build
           "
