@@ -15,4 +15,14 @@ RUN npm run build
 
 EXPOSE 3000
 
+# Copy entrypoint script
+COPY docker/next/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+# Donné les droits d'exécution au script
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Execution du script
+# Ce script permet de faire un npm install en local
+ENTRYPOINT [ "entrypoint.sh" ]
+
 CMD ["npm", "start"]

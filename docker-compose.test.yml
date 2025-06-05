@@ -1,8 +1,8 @@
 services:
   next-app:
-    image: ghcr.io/thoomassc/next-cda1/next-app:main
+    image: ghcr.io/thoomassc/next-cda1/next-app:develop
     restart: always
     ports:
-      - "80:3000"
+      - "8080:3000"
     environment:
       - NODE_ENV=production
