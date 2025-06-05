@@ -6,3 +6,8 @@ services:
       - "8080:3000"
     environment:
       - NODE_ENV=production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.next-test.rule=Host(`23.22.39.35`)"
+      - "traefik.http.routers.next-test.entrypoints=web"
+      - "traefik.http.services.next-test.loadbalancer.server.port=3000"
