@@ -173,7 +173,7 @@ jobs:
 
       - name: Copier le fichier docker-compose.global.yml sur le serveur
         run: |
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa docker-compose.global.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:test/docker-compose.global.yml
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa docker-compose.global.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:docker-compose.global.yml
 
       - name: Déployer l'image Docker sur le serveur distant (test)
         run: |
