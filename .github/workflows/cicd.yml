@@ -135,7 +135,7 @@ jobs:
 
       - name: Copier le fichier docker-compose.prod.yml sur le serveur
         run: |
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./production/docker-compose.prod.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:production/docker-compose.prod.yml
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.prod.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:production/docker-compose.prod.yml
 
       - name: Déployer l'image Docker sur le serveur distant (prod)
         run: |
@@ -163,7 +163,7 @@ jobs:
 
       - name: Copier le fichier docker-compose.test.yml sur le serveur
         run: |
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./test/docker-compose.test.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:test/docker-compose.test.yml
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ./docker-compose.test.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:test/docker-compose.test.yml
 
       - name: Déployer l'image Docker sur le serveur distant (test)
         run: |
